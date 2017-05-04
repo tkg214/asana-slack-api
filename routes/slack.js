@@ -3,8 +3,7 @@ const slackRoute = require('express').Router();
 module.exports = () => {
 
   slackRoute.post('/channel-messages', (req, res) => {
-    console.log(req.body);
-    res.sendStatus(201);
+    res.json({ message: 'Message posted' });
   });
 
   slackRoute.get('/channel-messages', (req, res) => {
