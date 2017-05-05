@@ -22,14 +22,19 @@ module.exports = {
             channel_id: message.channelId,
             slack_channel: message.channel
           }).returning('channel_id').then(() => {
-            return;
+            knex('slack_messages').insert({
+              slack_user_id: message.userId,
+              slack_channel_id: message.channelId,
+              text: message.text
+            }).then(done);
           });
+        } else {
+          knex('slack_messages').insert({
+            slack_user_id: message.userId,
+            slack_channel_id: message.channelId,
+            text: message.text
+          }).then(done);
         }
-        knex('slack_messages').insert({
-          slack_user_id: message.userId,
-          slack_channel_id: message.channelId,
-          text: message.text
-        }).then(done);
       });
     });
   },
