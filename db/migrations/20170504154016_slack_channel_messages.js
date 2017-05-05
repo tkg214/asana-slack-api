@@ -1,21 +1,19 @@
 exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTable('slack_users', (t) => {
-      t.increments();
-      t.integer('user_id').unique;
-      t.varchar('slack_user', 30).unique;
+      t.varchar('user_id', 20).primary('user_id');
+      t.varchar('slack_user', 30);
     }),
     knex.schema.createTable('slack_channels', (t) => {
-      t.increments();
-      t.integer('channel_id').unique;
-      t.varchar('slack_channel', 30).unique;
+      t.varchar('channel_id', 20).primary('channel_id');
+      t.varchar('slack_channel', 30);
     }),
     knex.schema.createTable('slack_messages', (t) => {
       t.increments();
-      t.integer('user_id').references('id').inTable('slack_users');
-      t.integer('channel_id').references('id').inTable('slack_channels');
+      t.varchar('slack_user_id', 20).references('user_id').inTable('slack_users');
+      t.varchar('slack_channel_id', 20).references('channel_id').inTable('slack_channels');
       t.string('text');
-      t.integer('timestamp');
+      t.timestamps(true, true);
     })
   ]);
 };

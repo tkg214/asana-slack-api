@@ -12,7 +12,7 @@ module.exports = {
         knex('slack_users').insert({
           user_id: message.userId,
           slack_user: message.user
-        }).returning('user_id').then(() => {
+        }).then(() => {
           return;
         });
       }
