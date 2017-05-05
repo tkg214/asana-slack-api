@@ -1,24 +1,24 @@
 const slackRoute = require('express').Router();
 
-module.exports = () => {
+module.exports = (db) => {
 
   slackRoute.post('/channel-messages', (req, res) => {
-    const user = req.body.user;
-    const text = req.body.text;
-    const channel = req.body.channel;
-    const timestamp = req.body.timestamp;
-    console.log('Test message: ' + text);
-    res.json({ status: 'Message posted' });
+    const message = {
+      channelId: req.body.channelId,
+      channel: req.body.channel,
+      userId: req.body.userId,
+      user: req.body.user,
+      text: req.body.text,
+    };
+    db.storeSlackMessage(message, () => {
+      res.json({ status: 'Message posted' });
+    });
   });
 
   slackRoute.get('/channel-messages', (req, res) => {
-    res.sendStatus(200);
-  });
-
-  slackRoute.post('/message-post', (req, res) => {
-    const message = req.body.message;
-    console.log('Test message: ' + message);
-    res.json({ status: 'Message posted' });
+    db.fetchSlackMessages(results => {
+      res.json(results);
+    });
   });
 
   return slackRoute;

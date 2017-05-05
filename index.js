@@ -18,7 +18,7 @@ if (ENV === 'development') {
 }
 
 // API endpoint routing below
-const slackRoute = require('./routes/slack')();
+const slackRoute = require('./routes/slack')(db);
 app.use('/slack', slackRoute);
 
 app.listen(process.env.PORT, () => {
