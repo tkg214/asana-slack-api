@@ -9,6 +9,7 @@ const knex          = require('knex')(knexConfig[ENV]);
 const db            = require('./utils/dbFunctions');
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Only use knex logger in development
 if (ENV === 'development') {
