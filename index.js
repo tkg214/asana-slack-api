@@ -6,7 +6,7 @@ const app           = express();
 const bodyParser    = require('body-parser');
 const knexConfig    = require('./knexfile');
 const knex          = require('knex')(knexConfig[ENV]);
-const db            = require('./utils/db');
+const db            = require('./utils/dbFunctions');
 
 app.use(bodyParser.json());
 
